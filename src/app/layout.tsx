@@ -6,8 +6,8 @@ import Tes from './tes'
 
 
 export const metadata: Metadata = {
-  title: "mycms",
-  description: "content management system",
+  title: "Forged",
+  description: "a custom cms build with next js and express js",
 };
 
 export default function RootLayout({
