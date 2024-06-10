@@ -136,10 +136,10 @@ export function Navbar() {
               return (
                 <>
                 <Link href='/login'>
-                  <Button variant="text" color={"gray"} > Sign In</Button>
+                  <button  className="button2 bg-white text-black shadow-lg px-4">SIGN IN</button>
                 </Link>
                 <Link href='/register'>
-                  <Button color={"gray"}>Sign Up</Button>
+                  <button className="button2 bg-black text-white shadow-lg px-4">SIGN UP</button>
                 </Link>
               </>
               )

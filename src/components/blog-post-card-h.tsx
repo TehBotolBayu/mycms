@@ -16,13 +16,12 @@ interface BlogPostCardProps {
   desc: string;
   tags: string[];
   date: string;
-  userimg: string; 
   name: string;
 }
 
 
 
-export function BlogPostCardH({ userimg, name, img, title, desc, tags, date }: BlogPostCardProps) {
+export function BlogPostCardH({ name, img, title, desc, tags, date }: BlogPostCardProps) {
   return (
     <>
     <div className="relative bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg w-full p-2 md:p-6">

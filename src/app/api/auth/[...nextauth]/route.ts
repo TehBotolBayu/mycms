@@ -3,6 +3,8 @@ import User from "@/models/user";
 import NextAuth from "next-auth/next";
 import CredentialsProvider  from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import axios from "axios";
+import jwt from "jsonwebtoken";
 
 export const authOptions : any = {
     providers: [
@@ -11,10 +13,21 @@ export const authOptions : any = {
             credentials: {},
             
             async authorize(credentials) {
-                const {email, password } = credentials;
+                const {email, password } = credentials as any;
                 try {
                     await connect();
-                    let user = await User.findOne({email});
+                    let user = await User.findOne({email}).lean() as any;
+                    let id = user._id;
+
+                    const token = jwt.sign(
+                        {
+                          id
+                        },
+                        "secret_key",
+                        {
+                          expiresIn: "24h",
+                        }
+                      );
 
                     if(!user){
                         console.log("Email not registered");
@@ -27,6 +40,8 @@ export const authOptions : any = {
                         console.log("Wrong Password");
                         return null;
                     }
+                    
+                    user = {...user, token};
                     return user;
                 } catch (error) {
                     console.log("Error: " + error);
@@ -37,9 +52,7 @@ export const authOptions : any = {
 
     callbacks:{
         jwt: async ({ token, trigger, session, user, account }:{ token:any, trigger:any, session:any, user:any, account: any }) =>{
-        //   if(account){
-        //     token.accessToken = Object.assign({}, token, { access_token: account.access_token });
-        //   }
+
           if (user) {
             token.uid = user;
           }
@@ -51,8 +64,8 @@ export const authOptions : any = {
         session: async ({ session, token }:{ session:any, token:any }) => {
             session.user._id = token.uid._id;
             session.user.username = token.uid.username;
-            session.token = token.accessToken;
-          return session;
+            session.user.token = token.uid.token;
+            return session;
         },
       },
 

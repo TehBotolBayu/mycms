@@ -15,16 +15,12 @@ import BlogPostCardH from './blog-post-card-h';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from "axios";
+import { Node } from 'slate'
+import { User } from '@/types/User';
 
-interface User {
-  email : string, 
-  name : string, 
-  password : string | undefined,
-  userid : string,
-  pictureUrl : string
-}
 
-const ReadOnly = ({userid, userdata}:{userid:string, userdata:User}) => {
+
+const ReadOnly = ({userid, userdata, token}:{userid:string, userdata:User, token:any}) => {
   const editor = useMemo(() => withReact(createEditor()), [])
   const router = useRouter();
   const [items, setItems] = useState<any>([]);
@@ -76,12 +72,9 @@ const ReadOnly = ({userid, userdata}:{userid:string, userdata:User}) => {
     };
   }, [fetchData]);
 
-  const tval = useRef('')
   
-  const generatePlainText = (initialData:Descendant[]) : string => {
-    tval.current = ''
-    initialData.forEach(e => e.children.forEach(f =>  tval.current += f.text ))
-    return tval.current;
+  const generatePlainText = nodes => {
+    return nodes.map(n => Node.string(n)).join('\n')
   }
 
 
@@ -92,6 +85,10 @@ const ReadOnly = ({userid, userdata}:{userid:string, userdata:User}) => {
       setItems(filteredData); 
       const resdata = await fetch(`http://127.0.0.1:3300/api/v1/article/${articleId}`, {
         method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`
+        }
       });
       const dataa = await resdata.json();
     } catch (error) {
@@ -150,8 +147,8 @@ useEffect(()=>{
                   </div>)
           } else  tes = <></>;
             return (
-              <div className='flex '>
-                <div key={i} onClick={() => router.push(e.links.read)} className='cursor-pointer hover:-translate-y-2 transition-all ease-in mb-4 w-full'>
+              <div className='flex ' key={e._id}>
+                <div  onClick={() => router.push(e.links.read)} className='cursor-pointer hover:-translate-y-2 transition-all ease-in mb-4 w-full'>
                   <BlogPostCardH title={e.title} desc={text} img={e?.cover || '/image/blogs/blog-1.png'}/>
                 </div>
                 {tes}

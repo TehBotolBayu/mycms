@@ -1,4 +1,8 @@
 "use client";
+
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { User } from '@/types/User';
 import Image from "next/image";
 import {
   Card,
@@ -73,7 +77,10 @@ const tags = [
   "Vlog",
 ];
 
+
+
 const Draft = () => {
+  const toastId = useRef<any>(null);
   const [urlcover, seturlcover] = useState("");
 
   const [content, setcontent] = useState<Descendant[]>(initialValue);
@@ -102,6 +109,48 @@ const Draft = () => {
   const [userId, setuserId] = useState<String>("");
   const [mode, setmode] = useState("create");
   const [contentId, setcontentId] = useState(null);
+  const [changeload, setchangeload] = useState('false')
+
+  const notifyLoad = () => toastId.current = toast(
+    <div className='flex items-center'><img src="spinner.svg" alt="" className='w-12' /><span className='mr-2'>Loading</span></div>, {
+    position: "bottom-center",
+    autoClose: false,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    transition: Zoom,
+    });
+    const notifyResult = () => toast.update(toastId.current, {
+      render: <div className='flex items-center'><span className='mr-2'>Upload Success</span></div>,
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      transition: Zoom,
+      });
+      const notifyError = () => toast.update(toastId.current, {
+        render: <div className='flex items-center bg-red-400'><span className='mr-2'>Upload Failed</span></div>,
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        transition: Zoom,
+        });
+
+        useEffect(()=>{
+          if(changeload == 'true')
+          notifyLoad();
+          else if(changeload == 'false') notifyResult();
+          else if(changeload == 'failed') notifyError();
+        }, [changeload])
 
   useEffect(() => {
     if (localStorage.getItem("dataArticle")) {
@@ -189,6 +238,17 @@ const Draft = () => {
 
   return (
     <>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {(() => {
         if (openReview) {
           return (
@@ -372,10 +432,11 @@ const Draft = () => {
                         </div>
                       </div>
                     </div>
-                    <MButton
-                      className="mt-6"
-                      fullWidth
+                    <button
+                      className="mt-6 button2 bg-black text-white w-full"
+                      
                       onClick={(e) => {
+                        setchangeload('true')
                         if (preview) {
                           handleCoverUpload(e)
                             .then((urlFile) => {
@@ -387,7 +448,7 @@ const Draft = () => {
                                   userId,
                                   urlcover: urlFile,
                                   tags: selected,
-                                });
+                                },session);
                               else
                                 return editArticle(e, {
                                   title,
@@ -396,15 +457,15 @@ const Draft = () => {
                                   contentId,
                                   urlcover: urlFile,
                                   tags: selected,
-                                });
+                                }, session);
                             })
                             .then((res) => {
                               if (res) {
                                 setopenReview(false);
-                                alert("Success");
+                                setchangeload('false')
                               } else {
                                 setopenReview(false);
-                                alert("Failed");
+                                setchangeload('failed')
                               }
                             });
                         } else {
@@ -415,13 +476,13 @@ const Draft = () => {
                               userId,
                               urlcover,
                               tags: selected,
-                            }).then((res) => {
+                            },session).then((res) => {
                               if (res) {
                                 setopenReview(false);
-                                alert("Success");
+                                setchangeload('false')
                               } else {
                                 setopenReview(false);
-                                alert("Failed");
+                                setchangeload('failed')
                               }
                             });
                           } else {
@@ -432,13 +493,13 @@ const Draft = () => {
                               contentId,
                               urlcover,
                               tags: selected,
-                            }).then((res) => {
+                            }, session).then((res) => {
                               if (res) {
                                 setopenReview(false);
-                                alert("Success");
+                                setchangeload('false')
                               } else {
                                 setopenReview(false);
-                                alert("Failed");
+                                setchangeload('failed')
                               }
                             });
                           }
@@ -446,15 +507,15 @@ const Draft = () => {
                       }}
                     >
                       Save
-                    </MButton>
-                    <MButton
-                      className="mt-6"
-                      fullWidth
+                    </button>
+                    <button
+                      className="mt-6 button2 bg-white text-black w-full"
+                      
                       color="white"
                       onClick={() => setopenReview(false)}
                     >
                       Cancel
-                    </MButton>
+                    </button>
                   </form>
                 </Card>
               </div>
@@ -545,7 +606,7 @@ const Draft = () => {
   );
 };
 
-const createArticle = async (event, data) => {
+const createArticle = async (event, data, session) => {
   event.preventDefault();
   const { title, content, userId, urlcover, tags } = data;
   const titleid = title.replace(/\s+/g, "-") + "-" + Date.now();
@@ -554,6 +615,7 @@ const createArticle = async (event, data) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Authorization': `Bearer ${session?.user?.token}`
       },
       body: JSON.stringify({
         titleid,
@@ -576,7 +638,7 @@ const createArticle = async (event, data) => {
   }
 };
 
-const editArticle = async (event, data) => {
+const editArticle = async (event, data, session) => {
   event.preventDefault();
   const { title, content, userId, contentId, urlcover, tags } = data;
 
@@ -588,6 +650,7 @@ const editArticle = async (event, data) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${session?.user?.token}`
         },
         body: JSON.stringify({
           titleid,
@@ -807,14 +870,5 @@ const MarkButton = ({ format, icon }) => {
 const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "" }] },
 ];
-// const initialValue: Descendant[] = [
-//   {
-//     "type": "paragraph",
-//     "children": [
-//       {
-//         "text": "this article have tags"
-//       }
-//     ]
-//   }
-// ];
+
 export default Draft;
