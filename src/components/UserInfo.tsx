@@ -248,6 +248,8 @@ function UserInfo({usernameparam}:{usernameparam:String}) {
                 })()}
               </div>
             </div>
+            {
+/*
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2 mt-3">
                 <Typography className="!text-gray-900 font-bold">
@@ -274,7 +276,9 @@ function UserInfo({usernameparam}:{usernameparam:String}) {
                 </Typography>
               </div>
             </div>
-          </div>
+
+*/}
+</div>
         </header>
         {editUser && (
           <div className="w-full h-full min-w-screen min-h-screen bg-gray-500 bg-opacity-50 fixed top-0 left-0 flex justify-center items-center z-10">
