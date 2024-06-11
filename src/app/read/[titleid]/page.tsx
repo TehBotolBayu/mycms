@@ -11,7 +11,7 @@ async function page ({ params }: {
   console.log(contentData)
   console.log('id: ', contentData.data[0].author)
 
-  const resUser = await fetch(`http://localhost:3000/api/user?userid=${contentData.data[0].author}`, { cache: 'no-store' })
+  const resUser = await fetch(`/api/user?userid=${contentData.data[0].author}`, { cache: 'no-store' })
   const userData = await resUser.json()
   console.log('ini user data '); console.log(userData)
 

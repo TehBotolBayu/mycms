@@ -46,7 +46,7 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
 
   useEffect(() => {
     (() => {
-      fetch(`http://localhost:3000/api/userExists?username=${usernameparam}`).then((res) => {
+      fetch(`/api/userExists?username=${usernameparam}`).then((res) => {
         res.json().then((v) => {
           if (!v.user?.name) {
             router.push('/users/notfound')
