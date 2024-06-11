@@ -25,9 +25,9 @@ function LoginForm () {
       getSession().then((v: any) => {
         router.replace(v.user.username)
       })
-      // console.log(res);
+      // //console.log(res);
     } catch (error) {
-      console.log(error)
+      //console.log(error)
     }
   }
 

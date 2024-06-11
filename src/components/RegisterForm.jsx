@@ -50,7 +50,7 @@ function RegisterForm () {
       })
       const data = await res.json()
       if (res.ok) {
-        console.log(data)
+        // console.log(data)
         const form = e.target
         form.reset()
         router.push('/')

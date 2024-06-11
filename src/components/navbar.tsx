@@ -47,11 +47,11 @@ export function Navbar () {
 
   const { data: session, status }:{data:any, status:any} = useSession()
 
-  useEffect(() => {
-    (() => {
-      console.log(session)
-    })()
-  }, [session])
+  // useEffect(() => {
+  //   (() => {
+  //     console.log(session)
+  //   })()
+  // }, [session])
 
   function handleOpen () {
     setOpen((cur) => !cur)

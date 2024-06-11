@@ -42,7 +42,7 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
   const nameshow = useRef<string>()
   const emailshow = useRef()
 
-  useEffect(() => { console.log('ini sesionnya'); console.log(session) }, [session])
+  // useEffect(() => { //console.log('ini sesionnya'); //console.log(session) }, [session])
 
   useEffect(() => {
     (() => {
@@ -60,11 +60,11 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
               userid: v.user._id,
               pictureUrl: v.user.pictureUrl
             })
-            console.log(v.user)
+            //console.log(v.user)
           }
         })
       }).catch((e) => {
-        console.log(e)
+        //console.log(e)
       })
     })()
   }, [])
@@ -78,10 +78,10 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
   //   try {
   //     const savedata = data!.data!.filter((item: any) => item._id == articleId)[0]
   //     localStorage.setItem('dataArticle', JSON.stringify(savedata))
-  //     // console.log(savedata);
+  //     // //console.log(savedata);
   //     router.push('/draft')
   //   } catch (error) {
-  //     console.log(error)
+  //     //console.log(error)
   //   }
   // }
 
@@ -91,7 +91,7 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
   }
 
   const handleDelete = () => {
-    console.log('delete')
+    //console.log('delete')
   }
 
   const renderList = () => {
@@ -386,11 +386,11 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
                             throw new Error('Upload error')
                           }
                           return await res.json()
-                        } console.log('disini 1')
+                        } //console.log('disini 1')
                       })
                       .then((datares) => {
                         if (filepp) urlFile = datares.uploadFile.url
-                        console.log('disini 2')
+                        //console.log('disini 2')
                       })
                       .then(() => {
                         if (userData.name != username) {
@@ -436,7 +436,7 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
                         if (go) router.push('/' + username)
                       })
                       .catch((e) => {
-                        console.log(e)
+                        //console.log(e)
                         seteditload('failed')
                       })
                   }}

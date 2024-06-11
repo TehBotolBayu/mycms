@@ -193,7 +193,7 @@ const Draft = () => {
 
   const handleCoverUpload = async (e) => {
     const file = filepp
-    console.log(file)
+    // //console.log(file)
 
     const formData = new FormData()
     formData.append('file', file)
@@ -207,21 +207,21 @@ const Draft = () => {
       }
       const datares = await res.json()
       const urlFile = await datares.uploadFile.url
-      console.log(datares)
+      //console.log(datares)
       if (urlFile && !isImageUrl(urlFile)) {
         alert('URL is not an image')
         return
       }
-      // console.log(urlFile)
+      // //console.log(urlFile)
       seturlcover(urlFile)
       return await urlFile
     } catch (error) {
-      console.log('upload error: ', error)
+      //console.log('upload error: ', error)
     }
   }
 
   // useEffect(()=>{
-  //   console.log(urlFile)
+  //   //console.log(urlFile)
   // }, [urlFile])
 
   const [filepp, setfilepp] = useState<any>(null)
@@ -414,7 +414,7 @@ const Draft = () => {
                                       onClick={() => {
                                         setMenuOpen(true)
                                         setSelected((prev) => [...prev, tag])
-                                        // console.log(selected);
+                                        // //console.log(selected);
                                         setQuery('')
                                       }}
                                     >
@@ -636,7 +636,7 @@ const createArticle = async (event, data, session) => {
       return false
     }
   } catch (error) {
-    console.log('Error during upload: ', error)
+    //console.log('Error during upload: ', error)
     return false
   }
 }
@@ -667,13 +667,13 @@ const editArticle = async (event, data, session) => {
     )
     if (res.ok) {
       const data = await res.json()
-      console.log(data)
+      //console.log(data)
       return data
     } else {
       return false
     }
   } catch (error) {
-    console.log('Error during upload: ', error)
+    //console.log('Error during upload: ', error)
     return false
   }
 }
@@ -737,7 +737,7 @@ const handleFile = async (e, editor) => {
     }
     const datares = await res.json()
     const urlFile = await datares.uploadFile.url
-    console.log(datares)
+    //console.log(datares)
 
     if (urlFile && !isImageUrl(urlFile)) {
       alert('URL is not an image')
@@ -745,7 +745,7 @@ const handleFile = async (e, editor) => {
     }
     urlFile && insertImage(editor, urlFile)
   } catch (error) {
-    console.log('upload error: ', error)
+    //console.log('upload error: ', error)
   }
 }
 
