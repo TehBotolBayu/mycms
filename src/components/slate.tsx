@@ -1,4 +1,4 @@
-import React, { ReactNode, Ref, PropsWithChildren } from 'react'
+import React, { type ReactNode, type Ref, type PropsWithChildren } from 'react'
 import ReactDOM from 'react-dom'
 import { cx, css } from '@emotion/css'
 
@@ -16,16 +16,16 @@ export const Button = React.forwardRef(
       reversed,
       ...props
     }: PropsWithChildren<
-      {
-        active: boolean
-        reversed: boolean
-      } & BaseProps
+    {
+      active: boolean
+      reversed: boolean
+    } & BaseProps
     >,
     ref: Ref<OrNull<HTMLSpanElement>>
   ) => (
     <span
       {...props}
-      ref={ref}
+      ref={ref as any}
       className={cx(
         className,
         css`
@@ -50,9 +50,9 @@ export const EditorValue = React.forwardRef(
       value,
       ...props
     }: PropsWithChildren<
-      {
-        value: any
-      } & BaseProps
+    {
+      value: any
+    } & BaseProps
     >,
     ref: Ref<OrNull<null>>
   ) => {
@@ -62,7 +62,7 @@ export const EditorValue = React.forwardRef(
       .join('\n')
     return (
       <div
-        ref={ref}
+        ref={ref as any}
         {...props}
         className={cx(
           className,
@@ -100,8 +100,6 @@ export const EditorValue = React.forwardRef(
   }
 )
 
-
-
 export const Icon = React.forwardRef(
   (
     { className, ...props }: PropsWithChildren<BaseProps>,
@@ -109,7 +107,7 @@ export const Icon = React.forwardRef(
   ) => (
     <span
       {...props}
-      ref={ref}
+      ref={ref as any}
       className={cx(
         'material-icons',
         className,
@@ -129,7 +127,7 @@ export const Instruction = React.forwardRef(
   ) => (
     <div
       {...props}
-      ref={ref}
+      ref={ref as any}
       className={cx(
         className,
         css`
@@ -152,7 +150,7 @@ export const Menu = React.forwardRef(
     <div
       {...props}
       data-test-id="menu"
-      ref={ref}
+      ref={ref as any}
       className={cx(
         className,
         css`
@@ -182,7 +180,7 @@ export const Toolbar = React.forwardRef(
   ) => (
     <Menu
       {...props}
-      ref={ref}
+      ref={ref as any}
       className={cx(
         className,
         css`

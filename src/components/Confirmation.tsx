@@ -2,10 +2,9 @@
 
 import React from 'react'
 
-function Confirmation({others, setopen, setconfirmation}:{others: string, setopen: any, setconfirmation:any}) {
+function Confirmation ({ others, setopen, setconfirmation }: { others: string, setopen: any, setconfirmation: any }) {
   return (
     <div className={`border rounded-lg shadow relative max-w-sm ${others}`}>
-
 
       <div className="p-6  text-center">
         <svg
@@ -16,9 +15,9 @@ function Confirmation({others, setopen, setconfirmation}:{others: string, setope
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           ></path>
         </svg>
@@ -39,7 +38,7 @@ function Confirmation({others, setopen, setconfirmation}:{others: string, setope
         </button>
       </div>
     </div>
-  );
+  )
 }
 
 export default Confirmation

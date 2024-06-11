@@ -1,27 +1,25 @@
-import React from "react";
-import Image from "next/image";
+import React from 'react'
+import Image from 'next/image'
 import {
   Button,
   Typography,
   Card,
   CardHeader,
-  CardBody,
-} from "@material-tailwind/react";
+  CardBody
+} from '@material-tailwind/react'
 
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { ArrowRightIcon } from '@heroicons/react/24/outline'
 
 interface BlogPostCardProps {
-  img: string;
-  title: string;
-  desc: string;
-  tags: string[];
-  date: string;
-  name: string;
+  img: string
+  title: string
+  desc: string
+  tags: string[]
+  date: string
+  name: string
 }
 
-
-
-export function BlogPostCardH({ name, img, title, desc, tags, date }: BlogPostCardProps) {
+export function BlogPostCardH ({ name, img, title, desc, tags, date }: BlogPostCardProps) {
   return (
     <>
     <div className="relative bg-clip-border rounded-xl bg-white text-gray-700 shadow-lg w-full p-2 md:p-6">
@@ -44,20 +42,21 @@ export function BlogPostCardH({ name, img, title, desc, tags, date }: BlogPostCa
           {desc}
         </p>
         <div>
-        {(tags && tags[0])?
-              <div
-                className="text-xs rounded-full w-fit py-1 px-2 border 
+        {(tags && tags[0])
+          ? <div
+                className="text-xs rounded-full w-fit py-1 px-2 border
                 border-gray-400 bg-gray-50 text-gray-500 mr-2
                 "
               >
                  {tags[0]}
-              </div>:<></>}
+              </div>
+          : <></>}
         </div>
       </div>
       </div>
     </div>
     </>
-  );
+  )
 }
 
-export default BlogPostCardH;
+export default BlogPostCardH

@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import {AuthProvider} from './Providers';
-import {Navbar} from '@/components'
+import type { Metadata } from 'next'
+import './globals.css'
+import { AuthProvider } from './Providers'
+import { Navbar } from '@/components'
 import Tes from './tes'
 
-
 export const metadata: Metadata = {
-  title: "Forged",
-  description: "a custom cms build with next js and express js",
-};
+  title: 'Forged',
+  description: 'a custom cms build with next js and express js'
+}
 
-export default function RootLayout({
-  children,
+export default function RootLayout ({
+  children
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -30,5 +29,5 @@ export default function RootLayout({
         </AuthProvider>
       </body>
     </html>
-  );
+  )
 }

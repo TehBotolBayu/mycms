@@ -1,85 +1,85 @@
-import { Descendant, BaseEditor, BaseRange, Range, Element } from 'slate'
-import { ReactEditor } from 'slate-react'
-import { HistoryEditor } from 'slate-history'
+import { type Descendant, type BaseEditor, type BaseRange, type Range, type Element } from 'slate'
+import { type ReactEditor } from 'slate-react'
+import { type HistoryEditor } from 'slate-history'
 
-export type BlockQuoteElement = {
+export interface BlockQuoteElement {
   type: 'block-quote'
   align?: string
   children: Descendant[]
 }
 
-export type BulletedListElement = {
+export interface BulletedListElement {
   type: 'bulleted-list'
   align?: string
   children: Descendant[]
 }
 
-export type CheckListItemElement = {
+export interface CheckListItemElement {
   type: 'check-list-item'
   checked: boolean
   children: Descendant[]
 }
 
-export type EditableVoidElement = {
+export interface EditableVoidElement {
   type: 'editable-void'
   children: EmptyText[]
 }
 
-export type HeadingElement = {
+export interface HeadingElement {
   type: 'heading'
   align?: string
   children: Descendant[]
 }
 
-export type HeadingTwoElement = {
+export interface HeadingTwoElement {
   type: 'heading-two'
   align?: string
   children: Descendant[]
 }
 
-export type ImageElement = {
+export interface ImageElement {
   type: 'image'
   url: string
   children: EmptyText[]
 }
 
-export type LinkElement = { type: 'link'; url: string; children: Descendant[] }
+export interface LinkElement { type: 'link', url: string, children: Descendant[] }
 
-export type ButtonElement = { type: 'button'; children: Descendant[] }
+export interface ButtonElement { type: 'button', children: Descendant[] }
 
-export type BadgeElement = { type: 'badge'; children: Descendant[] }
+export interface BadgeElement { type: 'badge', children: Descendant[] }
 
-export type ListItemElement = { type: 'list-item'; children: Descendant[] }
+export interface ListItemElement { type: 'list-item', children: Descendant[] }
 
-export type MentionElement = {
+export interface MentionElement {
   type: 'mention'
   character: string
   children: CustomText[]
 }
 
-export type ParagraphElement = {
+export interface ParagraphElement {
   type: 'paragraph'
   align?: string
   children: Descendant[]
 }
 
-export type TableElement = { type: 'table'; children: TableRow[] }
+export interface TableElement { type: 'table', children: TableRow[] }
 
-export type TableCellElement = { type: 'table-cell'; children: CustomText[] }
+export interface TableCellElement { type: 'table-cell', children: CustomText[] }
 
-export type TableRowElement = { type: 'table-row'; children: TableCell[] }
+export interface TableRowElement { type: 'table-row', children: TableCell[] }
 
-export type TitleElement = { type: 'title'; children: Descendant[] }
+export interface TitleElement { type: 'title', children: Descendant[] }
 
-export type VideoElement = { type: 'video'; url: string; children: EmptyText[] }
+export interface VideoElement { type: 'video', url: string, children: EmptyText[] }
 
-export type CodeBlockElement = {
+export interface CodeBlockElement {
   type: 'code-block'
   language: string
   children: Descendant[]
 }
 
-export type CodeLineElement = {
+export interface CodeLineElement {
   type: 'code-line'
   children: Descendant[]
 }
@@ -106,30 +106,28 @@ type CustomElement =
   | CodeBlockElement
   | CodeLineElement
 
-export type CustomText = {
+export interface CustomText {
   bold?: boolean
   italic?: boolean
   code?: boolean
   text: string
 }
 
-export type EmptyText = {
+export interface EmptyText {
   text: string
 }
 
 export type CustomEditor = BaseEditor &
-  ReactEditor &
-  HistoryEditor & {
-    nodeToDecorations?: Map<Element, Range[]>
-  }
+ReactEditor &
+HistoryEditor & {
+  nodeToDecorations?: Map<Element, Range[]>
+}
 
 declare module 'slate' {
   interface CustomTypes {
     Editor: CustomEditor
     Element: CustomElement
     Text: CustomText | EmptyText
-    Range: BaseRange & {
-      [key: string]: unknown
-    }
+    Range: BaseRange & Record<string, unknown>
   }
 }

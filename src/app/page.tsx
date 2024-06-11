@@ -1,20 +1,10 @@
-
 import React from 'react'
-import Link from 'next/link'
-import ReadOnly from '@/components/ReadOnly';
-import {getServerSession} from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
-import { Typography } from '@material-tailwind/react';
-import dynamic from 'next/dynamic';
 import LazyLoad from '@/components/LazyLoad'
 
-// const LazyComponent = dynamic(() => import('@/components/Test'));
 
-async function page() {
-
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/article/1`, { cache: 'no-store' });
-  const dataa = await data.json();
-
+async function page () {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/article/1`, { cache: 'no-store' })
+  const dataa = await data.json()
 
   return (
     <div className='mt-8 md:my-32 md:mx-auto px-4 md:px-32 max-w-screen-xl w-full min-h-screen flex'>
@@ -23,7 +13,7 @@ async function page() {
           For You
         </div>
         <div className='w-full border-b-2'></div>
-        <LazyLoad/>
+        <LazyLoad mode={''} querystring={''}/>
       </div>
       <div className='w-1/3 hidden md:block'>
         <div className="font-semibold text-black text-xl mb-5 mt-16">
@@ -35,4 +25,4 @@ async function page() {
   )
 }
 
-export default page;
+export default page
