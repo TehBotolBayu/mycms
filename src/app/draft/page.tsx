@@ -135,7 +135,7 @@ const Draft = () => {
   }
   const notifyError = () => {
     toast.update(toastId.current, {
-      render: <div className='flex items-center bg-red-400'><span className='mr-2'>Upload Failed</span></div>,
+      render: <div className='flex items-center text-red-600'><span className='mr-2'>Upload Failed</span></div>,
       position: 'bottom-center',
       autoClose: 2000,
       hideProgressBar: true,
@@ -192,9 +192,9 @@ const Draft = () => {
     )?.length
 
   const handleCoverUpload = async (e) => {
+    e.preventDefault();
     const file = filepp
     // //console.log(file)
-
     const formData = new FormData()
     formData.append('file', file)
     try {
@@ -226,7 +226,9 @@ const Draft = () => {
 
   const [filepp, setfilepp] = useState<any>(null)
   const [preview, setPreview] = useState<any>(null)
+
   const handleChangePicture = (e: any) => {
+    e.preventDefault();
     const file = e.target.files[0]
     setfilepp(file)
     const reader = new FileReader()
@@ -434,78 +436,78 @@ const Draft = () => {
                     </div>
                     <button
                       className="mt-6 button2 bg-black text-white w-full"
-
-                      onClick={(e) => {
-                        setchangeload('true')
-                        if (preview) {
-                          handleCoverUpload(e)
-                            .then(async (urlFile) => {
-                              // alert(urlFile);
-                              if (mode == 'create') {
-                                return await createArticle(e, {
-                                  title,
-                                  content,
-                                  userId,
-                                  urlcover: urlFile,
-                                  tags: selected
-                                }, session)
-                              } else {
-                                return await editArticle(e, {
-                                  title,
-                                  content,
-                                  userId,
-                                  contentId,
-                                  urlcover: urlFile,
-                                  tags: selected
-                                }, session)
-                              }
-                            })
-                            .then((res) => {
-                              if (res) {
-                                setopenReview(false)
-                                setchangeload('false')
-                              } else {
-                                setopenReview(false)
-                                setchangeload('failed')
-                              }
-                            })
-                        } else {
-                          if (mode == 'create') {
-                            createArticle(e, {
-                              title,
-                              content,
-                              userId,
-                              urlcover,
-                              tags: selected
-                            }, session).then((res) => {
-                              if (res) {
-                                setopenReview(false)
-                                setchangeload('false')
-                              } else {
-                                setopenReview(false)
-                                setchangeload('failed')
-                              }
-                            })
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setchangeload('true')
+                          if (preview) {
+                            handleCoverUpload(e)
+                              .then(async (urlFile) => {
+                                // alert(urlFile);
+                                if (mode == 'create') {
+                                  return await createArticle(e, {
+                                    title,
+                                    content,
+                                    userId,
+                                    urlcover: urlFile,
+                                    tags: selected
+                                  }, session)
+                                } else {
+                                  return await editArticle(e, {
+                                    title,
+                                    content,
+                                    userId,
+                                    contentId,
+                                    urlcover: urlFile,
+                                    tags: selected
+                                  }, session)
+                                }
+                              })
+                              .then((res) => {
+                                if (res) {
+                                  setopenReview(false)
+                                  setchangeload('false')
+                                } else {
+                                  setopenReview(false)
+                                  setchangeload('failed')
+                                }
+                              })
                           } else {
-                            editArticle(e, {
-                              title,
-                              content,
-                              userId,
-                              contentId,
-                              urlcover,
-                              tags: selected
-                            }, session).then((res) => {
-                              if (res) {
-                                setopenReview(false)
-                                setchangeload('false')
-                              } else {
-                                setopenReview(false)
-                                setchangeload('failed')
-                              }
-                            })
+                            if (mode == 'create') {
+                              createArticle(e, {
+                                title,
+                                content,
+                                userId,
+                                urlcover,
+                                tags: selected
+                              }, session).then((res) => {
+                                if (res) {
+                                  setopenReview(false)
+                                  setchangeload('false')
+                                } else {
+                                  setopenReview(false)
+                                  setchangeload('failed')
+                                }
+                              })
+                            } else {
+                              editArticle(e, {
+                                title,
+                                content,
+                                userId,
+                                contentId,
+                                urlcover,
+                                tags: selected
+                              }, session).then((res) => {
+                                if (res) {
+                                  setopenReview(false)
+                                  setchangeload('false')
+                                } else {
+                                  setopenReview(false)
+                                  setchangeload('failed')
+                                }
+                              })
+                            }
                           }
-                        }
-                      }}
+                        }}
                     >
                       Save
                     </button>
@@ -613,12 +615,16 @@ const createArticle = async (event, data, session) => {
   event.preventDefault()
   const { title, content, userId, urlcover, tags } = data
   const titleid = title.replace(/\s+/g, '-') + '-' + Date.now()
+  console.log('disini');
+  
+  console.log(session)
+  console.log(session?.user?.token);
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/article`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${session?.user?.token}`
+        'Authorization': `Bearer ${session?.user?.token}`
       },
       body: JSON.stringify({
         titleid,
@@ -653,7 +659,7 @@ const editArticle = async (event, data, session) => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${session?.user?.token}`
+          'Authorization': `Bearer ${session?.user?.token}`
         },
         body: JSON.stringify({
           titleid,

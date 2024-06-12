@@ -74,17 +74,6 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
     signOut()
   }
 
-  // const editArticle = (event: any, articleId: any) => {
-  //   try {
-  //     const savedata = data!.data!.filter((item: any) => item._id == articleId)[0]
-  //     localStorage.setItem('dataArticle', JSON.stringify(savedata))
-  //     // //console.log(savedata);
-  //     router.push('/draft')
-  //   } catch (error) {
-  //     //console.log(error)
-  //   }
-  // }
-
   const handleEdit = () => {
     // toast("Wow so easy!")
     seteditUser(p => !p)
@@ -418,6 +407,7 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
                         update({
                           ...session,
                           user: {
+                            ...session.user,
                             email: userData.email,
                             name: userData.name,
                             username,
