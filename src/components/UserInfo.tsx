@@ -42,7 +42,8 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
   const nameshow = useRef<string>()
   const emailshow = useRef()
 
-  // useEffect(() => { //console.log('ini sesionnya'); //console.log(session) }, [session])
+  useEffect(() => { console.log('ini sesionnya'); console.log(session) }, [session])
+  useEffect(() => { console.log('ini nama'); console.log(userData.name) }, [userData])
 
   useEffect(() => {
     (() => {
@@ -407,9 +408,9 @@ function UserInfo ({ usernameparam }: { usernameparam: string }) {
                         update({
                           ...session,
                           user: {
-                            ...session.user,
                             email: userData.email,
                             name: userData.name,
+                            token: session.user.token,
                             username,
                             _id: userData.userid,
                             pictureUrl: userData.pictureUrl
