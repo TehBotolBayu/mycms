@@ -13,7 +13,7 @@ async function page () {
           For You
         </div>
         <div className='w-full border-b-2 mb-5'></div>
-        <LazyLoad mode={''} querystring={''}/>
+        <LazyLoad mode={''} querystring={''} filter={undefined} sort={''}/>
       </div>
       {/* <div className='w-1/3 hidden md:block'>
         <div className="font-semibold text-black text-xl mb-5 mt-16">

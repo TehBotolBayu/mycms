@@ -53,7 +53,6 @@ function ReadArticle ({ contentData, userData }: { contentData: contentDataType,
     return formattedDate
   }
 
-  const lovebutton = (e) => {}
 
   return (
     <div className=" my-14 md:my-32 md:mx-auto px-10  max-w-screen-md w-full min-h-screen">
@@ -94,33 +93,6 @@ function ReadArticle ({ contentData, userData }: { contentData: contentDataType,
               <p>ditulis pada {formatDate()}</p>
             </div>
           </Link>
-          <button onClick={lovebutton} className="btn-love text-red-500 bg-red-500">
-            <span className="fa fa-heart"></span>
-            <div className="small-ornament">
-              <div className="ornament o-1"></div>
-              <div className="ornament o-2"></div>
-              <div className="ornament o-3"></div>
-              <div className="ornament o-4"></div>
-              <div className="ornament o-5"></div>
-              <div className="ornament o-6"></div>
-            </div>
-            <div className="circle bg-red-500">
-              <svg>
-                <ellipse
-                  id="eclipse"
-                  rx="50"
-                  ry="50"
-                  cx="67.5"
-                  cy="67.5"
-                  fillOpacity="1"
-                  fill="#000000"
-                  strokeOpacity="1"
-                  strokeWidth="0"
-                  stroke="#988ADE"
-                ></ellipse>
-              </svg>
-            </div>
-          </button>
         </div>
         <Image
           src={contentData.cover || "/image/blogs/blog-1.png"}
