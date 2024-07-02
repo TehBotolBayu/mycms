@@ -78,7 +78,7 @@ const ReadOnly = ({ userid, userdata, token }: { userid: string, userdata: User,
     try {
       const filteredData = items!.filter((item: any) => item._id != articleId)
       setItems(filteredData)
-      const resdata = await fetch(`http://127.0.0.1:3300/api/v1/article/${articleId}`, {
+      const resdata = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/article/${articleId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -116,42 +116,70 @@ const ReadOnly = ({ userid, userdata, token }: { userid: string, userdata: User,
 
   return (
     <>
-          {
-        (deleteprompt) &&
-        <div className='fixed h-screen w-screen top-0 right-0 flex justify-center items-center z-[20]'>
-        <Confirmation setconfirmation={setconfirm} setopen={setdeleteprompt} others='relative bg-white ' />
-      </div>
-      }
-    <section className="py-12 container ">
-        {
-        items.map((e, i) => {
-          let text: string = generatePlainText(e.content)
-          if (text.length > 100) {
-            text = text.substring(0, 100) + '...'
+      {deleteprompt && (
+        <div className="fixed h-screen w-screen top-0 right-0 flex justify-center items-center z-[20]">
+          <Confirmation
+            setconfirmation={setconfirm}
+            setopen={setdeleteprompt}
+            others="relative bg-white "
+          />
+        </div>
+      )}
+      <section className="py-2 container ">
+        {items.map((e, i) => {
+          let text: string = generatePlainText(e.content);
+          if (text.length > 60) {
+            text = text.substring(0, 60) + "...";
           }
-          let tes
+          let tes;
           if (userid == e.author) {
-            tes = (<div className='flex flex-col justify-between h-full ml-1 '>
-                  <Button color="gray" className='mx-1 my-1 p-1 hover:-translate-y-2 transition-all ease-in' onClick={(event) => { setaid(e._id); setdeleteprompt(true) } } placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    <Icon>delete</Icon>
-                  </Button>
-                  <Button color="white" className='mx-1 my-1 p-1 hover:-translate-y-2 transition-all ease-in' onClick={(event) => { editArticle(e._id) } } placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                    <Icon>edit</Icon>
-                  </Button>
-                  </div>)
-          } else tes = <></>
-          return (
-              <div className='flex ' key={e._id}>
-                <div onClick={() => { router.push(e.links.read) }} className='cursor-pointer hover:-translate-y-2 transition-all ease-in mb-4 w-full'>
-                  <BlogPostCardH title={e.title} desc={text} img={e?.cover || '/image/blogs/blog-1.png'} tags={[]} date={''} name={''}/>
-                </div>
-                {tes}
+            tes = (
+              <div className="flex flex-row md:flex-col md:justify-between  h-full ml-1 ">
+                <Button
+                  color="gray"
+                  className="mx-1 my-1 p-1 hover:-translate-y-2 transition-all ease-in w-full"
+                  onClick={(event) => {
+                    setaid(e._id);
+                    setdeleteprompt(true);
+                  }}
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                >
+                  <Icon>delete</Icon>
+                </Button>
+                <Button
+                  color="white"
+                  className="mx-1 my-1 p-1 hover:-translate-y-2 transition-all ease-in w-full"
+                  onClick={(event) => {
+                    editArticle(e._id);
+                  }}
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                >
+                  <Icon>edit</Icon>
+                </Button>
               </div>
-          )
-        })
-        }
-    </section></>
-  )
+            );
+          } else tes = <></>;
+          return (
+            <div className="flex flex-col md:flex-row" key={e._id}>
+              <div
+                onClick={() => {
+                  router.push(e.links.read);
+                }}
+                className="cursor-pointer hover:-translate-y-2 transition-all ease-in mb-4 w-full"
+              >
+                <BlogPostCardH title={e.title} desc={text}  img={e?.cover || "/image/blogs/blog-1.png"} tags={[]} date={""} name={""} />
+              </div>
+              {tes}
+            </div>
+          );
+        })}
+      </section>
+    </>
+  );
 }
 
 export default ReadOnly

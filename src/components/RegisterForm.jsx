@@ -19,9 +19,11 @@ function RegisterForm () {
       seterror('All fields are necessary')
       return
     }
+    
+    console.log(name, email, password)
 
     try {
-      const resUser = await fetch('api/userExists', {
+      const resUser = await fetch(`${process.env.NEXT_PUBLIC_API_USER}/api/userExists`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -31,21 +33,21 @@ function RegisterForm () {
         })
       })
 
+
       const { user } = await resUser.json()
       if (user) {
         seterror('Email already registered')
         return
       }
-
       const username = name.replace(/\s+/g, '-') + '-' + Date.now()
 
-      const res = await fetch('api/register', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_USER}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name, username, email, password
+          name, username, email, password, pictureUrl:''
         })
       })
       const data = await res.json()
@@ -53,7 +55,7 @@ function RegisterForm () {
         // console.log(data)
         const form = e.target
         form.reset()
-        router.push('/')
+        router.push('/login')
       } else {
         console.log('User registration failed')
         seterror('User registration failed')
@@ -81,7 +83,7 @@ function RegisterForm () {
                     {error}
                 </div>
                 }
-                <Link href={'/'} className='text-sm mt-3 text-right'>
+                <Link href={'/login'} className='text-sm mt-3 text-right'>
                     Already have an account ?
                     <span className='underline'>Login</span>
                 </Link>

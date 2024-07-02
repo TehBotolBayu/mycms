@@ -4,4 +4,6 @@ export interface User {
   password: string | undefined
   userid: string
   pictureUrl: string
+  coverUrl: string
+  about: string
 }

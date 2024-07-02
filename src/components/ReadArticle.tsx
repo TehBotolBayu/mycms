@@ -1,5 +1,7 @@
 'use client'
 
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import React from 'react'
 import {
   createEditor,
@@ -51,6 +53,8 @@ function ReadArticle ({ contentData, userData }: { contentData: contentDataType,
     return formattedDate
   }
 
+  const lovebutton = (e) => {}
+
   return (
     <div className=" my-14 md:my-32 md:mx-auto px-10  max-w-screen-md w-full min-h-screen">
       <div className="border-b-2 w-full py-5 mb-10">
@@ -64,24 +68,25 @@ function ReadArticle ({ contentData, userData }: { contentData: contentDataType,
               >
                 {tag}
               </div>
-            )
+            );
           })}
         </div>
-        <div>
-          <Link href={'/' + userData.username} className="flex items-center">
-            {userData.pictureUrl
-              ? (
+        <div className="flex">
+          <Link
+            href={"/" + userData.username}
+            className="flex items-center w-full"
+          >
+            {userData.pictureUrl ? (
               <img
                 src={userData.pictureUrl}
                 alt=""
                 className="w-8 h-8 rounded-full"
               />
-                )
-              : (
+            ) : (
               <div className="w-8 h-8 rounded-full bg-black text-white text-2xl text-center">
                 {userData.name[0].toUpperCase()}
               </div>
-                )}
+            )}
             <div className="ml-8 flex-col justify-between">
               <div>
                 author <span className="font-bold">{userData.name}</span>
@@ -89,12 +94,41 @@ function ReadArticle ({ contentData, userData }: { contentData: contentDataType,
               <p>ditulis pada {formatDate()}</p>
             </div>
           </Link>
+          <button onClick={lovebutton} className="btn-love text-red-500 bg-red-500">
+            <span className="fa fa-heart"></span>
+            <div className="small-ornament">
+              <div className="ornament o-1"></div>
+              <div className="ornament o-2"></div>
+              <div className="ornament o-3"></div>
+              <div className="ornament o-4"></div>
+              <div className="ornament o-5"></div>
+              <div className="ornament o-6"></div>
+            </div>
+            <div className="circle bg-red-500">
+              <svg>
+                <ellipse
+                  id="eclipse"
+                  rx="50"
+                  ry="50"
+                  cx="67.5"
+                  cy="67.5"
+                  fillOpacity="1"
+                  fill="#000000"
+                  strokeOpacity="1"
+                  strokeWidth="0"
+                  stroke="#988ADE"
+                ></ellipse>
+              </svg>
+            </div>
+          </button>
         </div>
         <Image
-          src={contentData.cover || '/image/blogs/blog-1.png'}
+          src={contentData.cover || "/image/blogs/blog-1.png"}
           width={1000}
           height={1000}
-          className='py-4 w-full max-h-[50vh] object-cover object-center' alt={''}        />
+          className="py-4 w-full max-h-[50vh] object-cover object-center"
+          alt={""}
+        />
       </div>
       <Slate editor={editor} initialValue={contentData.content}>
         <Editable
@@ -104,7 +138,7 @@ function ReadArticle ({ contentData, userData }: { contentData: contentDataType,
         />
       </Slate>
     </div>
-  )
+  );
 }
 
 export default ReadArticle

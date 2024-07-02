@@ -2,15 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-input {
-    @apply w-[400px] border border-gray-200 py-2 px-6
-    bg-zinc-100/40;
-}
+    input {
+        @apply w-[400px] border border-gray-200 py-2 px-6
+        bg-zinc-100/40;
+    }
+    
+    .button{
+        @apply py-2 px-4 border rounded-lg text-white bg-black 
+    }
+    
+    .button2{
+        @apply cursor-pointer rounded-lg shadow-lg font-bold py-2 w-full text-sm
+    }
 
-.button{
-    @apply py-2 px-4 border rounded-lg text-white bg-black 
-}
+    .one:hover ~ .two{
+        @apply visible
+    }
 
-.button2{
-    @apply cursor-pointer rounded-lg shadow-lg font-bold py-2 w-full text-sm
-}
+      .btn-love{
+        margin:20% auto;
+        cursor:pointer;
+        background:transparent;
+        border:none;
+        font-size:50px;
+        outline:none;
+        color:#c0c1c3;
+        position:relative;
+        .fa {
+          position:relative;
+          z-index:1;
+        }
+        .small-ornament {
+          width:135px;
+          height:135px;
+          position:absolute;
+          margin-left: -67.5px;
+          margin-top: -67.5px;
+          left: 50%;
+          transform:scale(0);
+          top: 50%;
+          .ornament {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin-left: -8px;
+            margin-top: -8px;
+            opacity: 0.6;
+            left: 50%;
+            top: 50%;
+            border-radius:8px;
+            transform-origin: 50% 50% 0px;
+            &.o-1{
+              background:#988ADE;
+              transform:translate(-90px,-50px);
+            }
+            &.o-2{
+              background:#DE8AA0;
+                  transform:translate(0px,-100px);
+            }
+            &.o-3{
+              background:#8AAEDE;
+              transform:translate(90px,-50px);
+            }
+            &.o-4{
+              background:#8ADEAD;
+              transform:translate(90px,50px);
+            }
+            &.o-5{
+              background:#DEC58A;
+              transform:translate(0px,100px);
+            }
+            &.o-6{
+              background:#8AD1DE;
+              transform:translate(-90px,50px);
+            }
+          }
+        }
+        .circle{
+          position: absolute;
+          width: 135px;
+          height: 135px;
+          margin-left: -67.5px;
+          margin-top: -67.5px;
+          border-radius:50%;
+          opacity: 0;
+          left: 50%;
+          
+          top: 50%;
+          transform: translate(0px, 0px) rotate(0deg) scale(0);
+          transform-origin: 50% 50% 0px;
+        }
+      }

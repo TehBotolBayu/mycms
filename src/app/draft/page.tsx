@@ -251,11 +251,9 @@ const Draft = () => {
         draggable
         pauseOnHover
       />
-      {(() => {
-        if (openReview) {
-          return (
-            <>
-              <div className="min-w-screen min-h-screen w-full h-fit  bg-gray-500 bg-opacity-50 fixed py-32 top-0 left-0 flex justify-center z-10">
+      {(<>
+              <div className={`transition-all ease-linear duration-3000 min-w-screen min-h-screen w-full h-fit  bg-gray-500 bg-opacity-50 fixed py-32 top-0 left-0 flex justify-center z-10
+                ${(openReview)? 'visible translate-y-0':'invisible translate-y-20'}`}>
                 <Card
                   color="white"
                   shadow={false}
@@ -515,18 +513,15 @@ const Draft = () => {
                       className="mt-6 button2 bg-white text-black w-full"
 
                       color="white"
-                      onClick={() => { setopenReview(false) }}
+                      onClick={(e) => { e.preventDefault(); setopenReview(false); }}
                     >
                       Cancel
                     </button>
                   </form>
                 </Card>
               </div>
-            </>
-          )
-        }
-      })()}
-      <div className="mt-14 md:mt-32 md:mx-auto px-10  mx-auto max-w-screen-md w-full ">
+            </>)}
+      <div className=" mt-14 md:mt-20 md:mx-auto px-10  mx-auto max-w-screen-md w-full ">
         <>
           {!loadlocal && (
             <Slate
@@ -534,14 +529,14 @@ const Draft = () => {
               initialValue={content}
               onChange={(e) => { setcontent(e) }}
             >
-              <div className="sticky top-32 bg-white z-2 my-8 mb-4">
-                <div className="flex mb-8">
+              <div className="sticky top-16 bg-white z-2 my-8 mb-2 lg:mb-4">
+                <div className="flex mb-4 lg:mb-8">
                   <input
                     type="text"
                     placeholder="title"
                     value={title}
                     onChange={(e) => { settitle(e.target.value) }}
-                    className="font-bold text-2xl w-full mr-2"
+                    className="font-bold text-2xl w-full mr-2 "
                   />
                   {mode == 'create'
                     ? (
@@ -586,7 +581,7 @@ const Draft = () => {
                 </Toolbar>
               </div>
               <Editable
-                className="px-6 py-2 h-[50vh] overflow-y-scroll"
+                className="px-6 py-2 pb-1 h-[60vh] overflow-y-scroll"
                 renderElement={renderElement}
                 renderLeaf={renderLeaf}
                 renderPlaceholder={renderPlaceHolder}

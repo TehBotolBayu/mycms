@@ -7,6 +7,7 @@ export async function POST (req: any) {
   try {
     await connect()
     const { email } = await req.json()
+    console.log(email)
     const user = await User.findOne({ email }).select('_id')
     console.log('user: ', user)
     return NextResponse.json({ user })

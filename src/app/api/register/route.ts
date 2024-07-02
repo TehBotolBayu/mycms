@@ -5,15 +5,15 @@ import bcrypt from 'bcryptjs'
 
 export async function POST (req: any) {
   try {
-    const { name, email, password, pictureUrl } = await req.json()
+    const { name, username, email, password, pictureUrl } = await req.json()
     const hashed = await bcrypt.hash(password, 10)
     await connect()
-    await User.create({ name, email, password: hashed, pictureUrl })
+    await User.create({ name, username, email, password: hashed, pictureUrl })
 
     return NextResponse.json(
       {
         message: 'User registered',
-        data: { name, email, password: hashed, pictureUrl }
+        data: { name, email, password: hashed, pictureUrl, coverUrl:'', about:'' }
       },
       { status: 201 })
   } catch (error) {

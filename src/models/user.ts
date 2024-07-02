@@ -16,6 +16,12 @@ const userSchema = new Schema({
   },
   pictureUrl: {
     type: String
+  },
+  coverUrl: {
+    type: String
+  },
+  about: {
+    type: String,
   }
 }, { timestamps: true })
 
